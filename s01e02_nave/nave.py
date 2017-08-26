@@ -20,7 +20,7 @@ class OVNI:
 
     def __str__(self):
         return self.label + " " + str(self.x) \
-             + " (" + str(self.vida) + ")"
+            + " (" + str(self.vida) + ")"
 
 class Nave:
     def __init__(self, x, forca):
@@ -46,6 +46,7 @@ while(True):
     print(nave)
     for x in lista:
         print(x)
+
     escolha = input("dea: ")
     if escolha == "d":
         nave.mover(1)
@@ -53,5 +54,6 @@ while(True):
         nave.mover(-1)
     elif escolha == "a":
         nave.atirar(lista)
+
     for x in lista:
         x.andar()

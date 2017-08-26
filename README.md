@@ -14,3 +14,10 @@
 - Construtores
 - Código do Macaco e do Xiwahwah
 - Remoção em vetor
+
+## s02e02 - Conta Bancária
+- Apresentação do modelo de trabalhos
+- Explicações sobre o relatório
+- Apresentação do moodle da disciplina
+- Construção da Conta Bancário com UI de comandos
+- **TODO**: Fazer o JunkFoodMachine e postar no moodle
