@@ -21,3 +21,7 @@
 - Apresentação do moodle da disciplina
 - Construção da Conta Bancário com UI de comandos
 - **TODO**: Fazer o JunkFoodMachine e postar no moodle
+
+## s03e01 - Intro Typescript
+- Explicação básica UML
+- Introdução ao Typescript reescrevendo o código da Conta Bancária

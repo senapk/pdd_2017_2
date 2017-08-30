@@ -34,11 +34,11 @@ def main():
 	conta = Conta(0)
 	
 	while op[0] != "fim":
-		op = input("").split()
+		op = input("Digite comando ou digite help").split()
 		
 		if op[0] == "help":
 			print("saque _valor")
-			print("deposito _valor")
+			print("deposito valor")
 			print("saldo")
 			print("extrato")
 			print("iniciar _id")
@@ -64,7 +64,6 @@ def main():
 				print(ope.descricao, "-", ope.valor)
 		 
 main()
-	
 	
 	
 	
