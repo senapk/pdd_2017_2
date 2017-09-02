@@ -25,3 +25,6 @@
 ## s03e01 - Intro Typescript
 - Explicação básica UML
 - Introdução ao Typescript reescrevendo o código da Conta Bancária
+
+## s03e02 - Contato em Typescript
+- Implementação do contato em typescript
