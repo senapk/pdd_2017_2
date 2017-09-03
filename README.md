@@ -28,3 +28,4 @@
 
 ## s03e02 - Contato em Typescript
 - Implementação do contato em typescript
+- **Todo**: implementar junkfood level 1 e agiota level 1.
