@@ -17,31 +17,6 @@ sudo gdebi vscode.deb
 
       sudo npm install -g typescript
 
-- instalar módulo para ler do teclado	. Não use **sudo** nesse comando:
+- instalar módulo para ler do teclado. Não use **sudo** nesse comando:
 
       npm install readline-sync
-
-- se quiser fazer configurações adicionais no seu vscode:
-
-      https://code.visualstudio.com/docs/languages/typescript
-
-- Na pasta do seu projeto crie um arquivo **tsconfig.json** com o seguinte conteúdo:
-
-```
-{
-    "compilerOptions": {
-        "target": "es6",
-        "module": "commonjs",
-        "sourceMap": true
-    }
-}
-```
-
-- Crie um arquivo **main.ts** para na pasta colocar seu código.
-
-```typescript
-declare function require(name:string);
-var input = require('readline-sync');
-let nome : string = input.question("Qual seu nome?").split(" ");
-console.log("Hello " + nome)
-```
