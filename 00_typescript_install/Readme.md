@@ -10,16 +10,23 @@ sudo gdebi vscode.deb
 
 - instalando o node 6 no ubuntu
 
-      curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-      sudo apt-get install -y nodejs
+```
+curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
 
 - install typescript via npm
 
-      sudo npm install -g typescript
+```
+sudo npm install -g typescript
+```
 
-- instalar módulo para ler do teclado	. Não use **sudo** nesse comando:
+- instalar módulo para ler do teclado. Não use **sudo** nesse comando:
 
-      npm install readline-sync
+```
+cd ~
+npm install readline-sync
+```
 
 - se quiser fazer configurações adicionais no seu vscode:
 
@@ -37,11 +44,15 @@ sudo gdebi vscode.deb
 }
 ```
 
+ou execute tsc --init na pasta que você quer colocar o projeto.
+
 - Crie um arquivo **main.ts** para na pasta colocar seu código.
 
 ```typescript
-declare function require(name:string);
+declare function require(name: string): any;
 var input = require('readline-sync');
 let nome : string = input.question("Qual seu nome?").split(" ");
 console.log("Hello " + nome)
 ```
+
+- Se quiser atribuir um comando para executar seu projeto, altere seu .vscode/tasks.json de acordo com o exemplo.
