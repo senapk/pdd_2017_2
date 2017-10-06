@@ -32,19 +32,7 @@ npm install readline-sync
 
       https://code.visualstudio.com/docs/languages/typescript
 
-- Na pasta do seu projeto crie um arquivo **tsconfig.json** com o seguinte conteúdo:
-
-```
-{
-    "compilerOptions": {
-        "target": "es6",
-        "module": "commonjs",
-        "sourceMap": true
-    }
-}
-```
-
-ou execute tsc --init na pasta que você quer colocar o projeto.
+- execute tsc --init na pasta que você quer colocar o projeto para criar o tsconfig.json
 
 - Crie um arquivo **main.ts** para na pasta colocar seu código.
 
