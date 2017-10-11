@@ -1,69 +1,74 @@
-declare function require(name: string): any;
-var readline = require('readline-sync');
+import {Fone} from './fone';
+import {Contato} from './contato';
+import {cin, cout} from "./readline";
+import {Agenda} from "./agenda";
 
-function cin(text: string): string{
-    return readline.question(text);
-}
-
-function cout(text: string){
-    return console.log(text);
-}
-
-import {Fone} from "./fone";
-import {Contato} from "./contato";
-
-class Agenda {
-    private _contatos: Map<string, Contato>;
-    private _favoritos: Map<string, Contato>;
+class Controller {
+    private agenda: Agenda;
+    
     constructor(){
-        this._contatos = new Map<string, Contato>();
-        this._favoritos = new Map<string, Contato>();
-        
+        this.agenda = new Agenda();
     }
 
-    addCont(cont: Contato): boolean{
-        if(this._contatos.has(cont.nome))
-            return false;
-        this._contatos.set(cont.nome, cont);
-        return true;
+    process(line: string){
+        cout(line + ":");
+        this.exec(line);
     }
 
-    getCont(nome: string): Contato | null {
-        if(!this._contatos.has(nome))
-            return null;
-        return this._contatos.get(nome);
-    }
+    exec(line: string) {
+        let ui = line.split(" ");
+        let cmd = ui[0];
 
-    rmCont(nome: string): boolean{
-        if(this._contatos.delete(nome)){
-            this._favoritos.delete(nome);
-            return true;
+        if(cmd == "help"){
+            cout("" +
+                "addCont _nome" + "\n" +
+                "addFone _nome _foneid _number" + "\n" +
+                "rmFone  _nome _foneid" + "\n" +
+                "show"
+            );
         }
-        return false;
-    }
-    favoritar(nome: string): boolean {
-        if(this._contatos.has(nome)){
-            let contato = this._contatos.get(nome);
-            if(!contato.favorited){
-                this._favoritos.set(nome, contato);
-                contato.favorited = true;
-                return true;
-            }
+        if(cmd == "addCont"){//nome
+            cout("  " + this.agenda.addContato(new Contato(ui[1])));
         }
-        return false;
-    }
-    desfavoritar(nome: string): boolean {
-        if(this._contatos.has(nome)){
-            let contato = this._contatos.get(nome);
-            if(contato.favorited){
-                contato.favorited = false;
-                this._favoritos.delete(nome);
-                return true;
-            }
+        if(cmd == "addFone"){//_nome _foneid _number
+            let cont = this.agenda.getContato(ui[1]);
+            if(cont)
+                cout("  addFone " + cont.addFone(new Fone(ui[2], ui[3])));
+            else
+                cout("  Contato nao existe");
         }
-        return false;
+        if(cmd == "rmFone"){
+            let cont = this.agenda.getContato(ui[1]);
+            if(cont)
+                cout("  rmFone: " + cont.rmFone(ui[2]));
+            else
+                cout("  Contato nao existe");
+        }
+        if(cmd == "show"){
+            cout("" + this.agenda);
+        }
     }
 }
+
+let cont = new Controller();
+cont.process("addCont joao");
+cont.process("addCont marcos");
+cont.process("addCont silva");
+cont.process("addCont joao");
+cont.process("addFone joao oi 32123");
+cont.process("addFone joao oi 4");
+cont.process("addFone joao tim 123");
+cont.process("rmFone joao tim");
+cont.process("rmFone valdir oi");
+cont.process("show");
+
+
+
+
+
+
+
+
 
 
 
