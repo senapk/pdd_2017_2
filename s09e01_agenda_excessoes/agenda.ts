@@ -1,71 +1,64 @@
 import {Fone} from './fone';
 import {Contato} from './contato';
-import {cin, cout} from "./readline";
+import {pdd} from "./pdd";
 
 export class Agenda {
-    private _contatos: Map<string, Contato>;
-    private _favoritos: Map<string, Contato>;
+    private m_contatos: Map<string, Contato>;//mapa de contatos
+    private m_favoritos: Map<string, Contato>;//mapa de favoritos
 
     constructor(){
-        this._contatos = new Map<string, Contato>();
-        this._favoritos = new Map<string, Contato>();
+        this.m_contatos = new Map<string, Contato>();
+        this.m_favoritos = new Map<string, Contato>();
     }
 
     addContato(cont: Contato){
-        if(this._contatos.has(cont.nome))
+        if(this.m_contatos.has(cont.nome))
             throw new Error("Nome ja existe");
-        this._contatos.set(cont.nome, cont);
+        this.m_contatos.set(cont.nome, cont);
     }
     
     hasContact(nome: string): boolean {
-        return this._contatos.has(nome);
+        return this.m_contatos.has(nome);
     }
+
     getContato(nome: string): Contato {
-        if(!this._contatos.has(nome))
+        if(!this.m_contatos.has(nome))
             throw new Error("Nao existe contato com esse nome");
-        return this._contatos.get(nome);
+        return this.m_contatos.get(nome);
     }
 
     rmContato(nome: string){
-        if(!this._contatos.delete(nome))
+        if(!this.m_contatos.delete(nome))
             throw new Error("Nao existe contato com esse nome");
-        this._favoritos.delete(nome);
+        this.m_favoritos.delete(nome);
     }
 
     favoritar(nome: string) {
-        let contato = this._contatos.get(nome);
+        let contato = this.m_contatos.get(nome);
         if(contato.favorited)
             throw new Error("Contato ja esta favoritado");
-        this._favoritos.set(nome, contato);
+        this.m_favoritos.set(nome, contato);
         contato.favorited = true;
     }
 
     desfavoritar(nome: string) {
-        let contato = this._contatos.get(nome);
+        let contato = this.m_contatos.get(nome);
         if(!contato.favorited)
             throw new Error("Contato ja eh favorito");
         contato.favorited = false;
-        this._favoritos.delete(nome);
+        this.m_favoritos.delete(nome);
     }
 
     toString(): string {
-        let saida = "Contatos:\n";
-        saida += this.getContatos();
-        return saida;
+        return pdd.vet2str("Agenda\n", this.contatos, "\n");
     }
 
-    getContatos(): string {
-        let saida = "";
-        for(let contato of this._contatos.values())
-            saida += contato + "\n";
-        return saida;
+    get contatos(): Array<Contato> {
+        return pdd.map2vet(this.m_contatos);
     }
 
-    getFavoritos(): string {
-        let saida = "";
-        for(let contato of this._favoritos.values())
-            saida += contato + "\n";
-        return saida;
+    get favoritos(): Array<Contato> {
+        return pdd.map2vet(this.m_favoritos);
     }
 
     static test() {
@@ -83,6 +76,6 @@ export class Agenda {
         agenda.addContato(new Contato("Silva"));
         agenda.favoritar("Silva");
         agenda.favoritar("Rex");
-        cout("" + agenda);
+        pdd.cout("" + agenda);
     }
 }

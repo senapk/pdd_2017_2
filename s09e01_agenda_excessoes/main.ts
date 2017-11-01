@@ -1,7 +1,19 @@
 import {Fone} from './fone';
 import {Contato} from './contato';
-import {cin, cout} from "./readline";
+import {pdd} from "./pdd";
 import {Agenda} from "./agenda";
+
+const HELP = "" +
+            "addCont  _nome" + "\n" +
+            "rmCont   _nome" + "\n" +
+            "addFone  _nome _foneid _number" + "\n" +
+            "rmFone   _nome _foneid" + "\n" +
+            "fav      _nome" + "\n" + 
+            "desfav   _nome" + "\n" +
+            "show     _nome" + "\n" + 
+            "showFav"        + "\n" + 
+            "showAll"        + "\n" +
+            "fim";
 
 class Controller {
     private agenda: Agenda;
@@ -10,76 +22,61 @@ class Controller {
         this.agenda = new Agenda();
     }
 
-    process(line: string) {
+    process(line: string): string {
         let ui = line.split(" ");
         let cmd = ui[0];
 
-            if(cmd == "help"){
-                cout("" +
-                    "addCont _nome" + "\n" +
-                    "addFone _nome _foneid _number" + "\n" +
-                    "rmFone  _nome _foneid" + "\n" +
-                    "show" + "\n" + 
-                    "fim"
-                );
-            }
-            if(cmd == "addCont"){//nome
-                this.agenda.addContato(new Contato(ui[1]));
-                cout("sucesso");
-            }
-            if(cmd == "addFone"){//_nome _foneid _number
-                this.agenda.getContato(ui[1]).addFone(new Fone(ui[2], ui[3]));
-                cout("sucesso");
-            }
-            if(cmd == "rmFone"){
-                let cont = this.agenda.getContato(ui[1]).rmFone(ui[2]);
-                cout("sucesso");
-            }
-            if(cmd == "show"){
-                cout("" + this.agenda);
-            }
-        
+        if(cmd == "help")
+            return HELP;
+        else if(cmd == "addCont")
+            this.agenda.addContato(new Contato(ui[1]));
+        else if(cmd == "rmCont")
+            this.agenda.rmContato(ui[1]);
+        else if(cmd == "addFone")//_nome _idFone _number
+            this.agenda.getContato(ui[1]).addFone(new Fone(ui[2], ui[3]));
+        else if(cmd == "rmFone")//_nome _idFone
+            this.agenda.getContato(ui[1]).rmFone(ui[2]);
+        else if(cmd == "fav")
+            this.agenda.favoritar(ui[1]);
+        else if(cmd == "desfav")
+            this.agenda.desfavoritar(ui[1]);
+        else if(cmd == "show")
+            return "" + this.agenda.getContato(ui[1]);
+        else if(cmd == "showFav")
+            return "" + pdd.vet2str("Favoritos\n", this.agenda.favoritos, "\n");
+        else if(cmd == "showAll")
+            return "" + this.agenda;
+        else
+            return "comando invalido"; 
+        return "done";
     }
     
-    static interactive(){
-        let cont = new Controller();
-
+    commandLine(){
         let line = "";
-        while(line.split(" ")[0] != "fim"){
-            line = cin("(help): ");
-            cout(">> " + line);
-            
+        while(line != "fim"){
+            line = pdd.cin(">> ");
+            if(line == "" || line.substr(0, 2) == "  ")
+                continue;
+            pdd.cout(line);
             try {
-                cont.process(line);
+                pdd.cout(c.process(line));
             }catch(e){
-                cout("" + e.message)
+                pdd.cout("" + e.message)
             }
         }
     }
-
 }
 
-
-Controller.interactive();
+let c = new Controller();
+c.commandLine();
 
 /*
-
 addCont david
 addCont rui
 addCont rex
 addFone david oi 35
 addFone david casa 32
 show
-
-
-
-
-
-
-
-
-
-
 */
 
 
