@@ -38,9 +38,12 @@ npm install readline-sync
 
 ```typescript
 declare function require(name: string): any;
-var input = require('readline-sync');
-let nome : string = input.question("Qual seu nome?").split(" ");
-console.log("Hello " + nome)
+var readline = require('readline-sync');
+readline.setDefaultOptions({keepWhitespace : true});
+let input = (text: string) => readline.question(text);
+
+let nome = input("Qual seu nome");
+console.log("Hello " + nome);
 ```
 
 - Se quiser atribuir um comando para executar seu projeto, altere seu .vscode/tasks.json de acordo com o exemplo.
